@@ -30,6 +30,7 @@ public class HtcFrame extends JFrame {
                 if (!buttonIsPressed) {
                     turnOnOffButton.setBackground(Color.GREEN);
                     buttonIsPressed = true;
+                    //creeaz
                 } else {
                     turnOnOffButton.setBackground(Color.RED);
                     buttonIsPressed = false;

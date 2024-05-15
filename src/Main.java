@@ -1,3 +1,4 @@
+import java.io.OutputStreamWriter;
 import java.util.List;
 import Main.FuzzyPVizualzer;
 import Main.Plotter;
@@ -11,12 +12,13 @@ public class Main {
         //for gui
         MainFrame mainFrame = new MainFrame("Plant");
         ///////////
+        OutputStreamWriter osw=null;
         Scenario scenario = Scenario.winterDay();
         System.out.println("winter day");
         PlantModel plantModel = new PlantModel(SIM_PERIOD, scenario);
-        HeaterTankController_HTC tankController = new HeaterTankController_HTC(plantModel, SIM_PERIOD);
-        RoomTemperatureController_RTC roomController = new RoomTemperatureController_RTC(plantModel, SIM_PERIOD);
-        AirConditionerController_ACC airConditionerController = new AirConditionerController_ACC(plantModel, SIM_PERIOD);
+        HeaterTankController_HTC tankController = new HeaterTankController_HTC(osw, SIM_PERIOD); //changed plantModel to osw to all 3
+        RoomTemperatureController_RTC roomController = new RoomTemperatureController_RTC(osw, SIM_PERIOD);
+        AirConditionerController_ACC airConditionerController = new AirConditionerController_ACC(osw, SIM_PERIOD);
 
         roomController.start();
         tankController.start();

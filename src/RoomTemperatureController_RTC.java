@@ -6,6 +6,8 @@ import core.FuzzyPetriLogic.PetriNet.Recorders.FullRecorder;
 import core.FuzzyPetriLogic.Tables.OneXOneTable;
 import core.TableParser;
 
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -34,7 +36,7 @@ public class RoomTemperatureController_RTC {
     private AsyncronRunnableExecutor executor;
     private int p3RealInp;
     //prin constructor primeste perioada referinta pentru plant
-    public RoomTemperatureController_RTC(PlantModel plantModel, long simPeriod) {
+    public RoomTemperatureController_RTC(OutputStreamWriter osw, long simPeriod) {
         net = new FuzzyPetriNet();
         TableParser parser = new TableParser();
 
@@ -73,14 +75,24 @@ public class RoomTemperatureController_RTC {
 
             @Override
             public void accept(FuzzyToken t) {
-                plantModel.setHeatingOn(true);
+              //  plantModel.setHeatingOn(true);
+                try {
+                    osw.write("true");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         net.addActionForOuputTransition(t5, new Consumer<FuzzyToken>() {
 
             @Override
             public void accept(FuzzyToken t) {
-                plantModel.setHeatingOn(false);
+                //plantModel.setHeatingOn(false);
+                try {
+                    osw.write("false");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 

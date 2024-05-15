@@ -6,11 +6,15 @@ import core.FuzzyPetriLogic.PetriNet.Recorders.FullRecorder;
 import core.FuzzyPetriLogic.Tables.OneXOneTable;
 import core.TableParser;
 
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
 public class HeaterTankController_HTC {
+
+
     static String reader = "" +
             "{[<NL><NM><ZR><PM><PL>]" +
             " [<NL><NM><ZR><PM><PL>]" +
@@ -39,7 +43,7 @@ public class HeaterTankController_HTC {
     private int p3SysInp;
     private FuzzyPetriNet net;
 
-    public HeaterTankController_HTC(PlantModel plantModel, long simPeriod) {
+    public HeaterTankController_HTC(OutputStreamWriter osw, long simPeriod) {
         // se construieste reteaua Petri pentru HTC component
         TableParser parser = new TableParser();
         net = new FuzzyPetriNet();
@@ -94,9 +98,14 @@ public class HeaterTankController_HTC {
         net.addActionForOuputTransition(tr2Out, new Consumer<FuzzyToken>() {
             @Override
             public void accept(FuzzyToken tk) {
-                plantModel.setHeaterGasCmd(tankCommandDriver.defuzzify(tk));
+                //plantModel.setHeaterGasCmd(tankCommandDriver.defuzzify(tk));
+                try {
+                    osw.write(String.valueOf(tankCommandDriver.defuzzify(tk)));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
-            //trimite prin socket mesajul instead
+
         });
     }
     public void start() {    (new Thread(executor)).start();  }

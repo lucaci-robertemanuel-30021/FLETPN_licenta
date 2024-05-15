@@ -3,7 +3,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Server {
 
@@ -17,6 +16,7 @@ public Server(ServerSocket serverSocket){
     this.serverSocket = serverSocket;
 }
 
+
 public void startPlant(){
 
     try{
@@ -26,7 +26,7 @@ public void startPlant(){
         PlantModel plantModel = new PlantModel(Constants.SIM_PERIOD, scenario);
         double waterRefTemp = 75.0;
         double roomTemperature = 24.0;
-        ClientFactory factory = new ClientFactory(plantModel);
+        ClientHandlerFactory factory = new ClientHandlerFactory(plantModel);
 
         while(!serverSocket.isClosed()) {
             Socket socket = serverSocket.accept();
@@ -43,13 +43,15 @@ public void startPlant(){
             // print list of controllers
             System.out.println("Connected controllers: ");
             for(int i=0;i<connectedControllers.size();i++){
-                System.out.println(connectedControllers.get(i)); //arata null, cum scot nume controller de aici
+                System.out.println(connectedControllers.get(i));
+              //  System.out.println(factory.getControllerName());
             }
 
-            //aici pornesc controllerele?
+            //aici pornesc controllerele NU
 
             //dupa asta sa fac si daca se deconecteaza un controller
-
+            //connectedControllers.remove(c);
+            //System.out.println("Controller deconectat");
         }
     }catch (IOException e){
 

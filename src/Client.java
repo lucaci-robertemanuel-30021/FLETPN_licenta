@@ -83,6 +83,7 @@ public class Client {
         System.out.println("Add the name of the controller you want to use(ACC, HTC, RTC): ");
         String name = scanner.nextLine();
         Socket socket = null;
+        //aici creez controlleru
 
             try {
                 socket = new Socket(Constants.Server_Address, Constants.PORT);
@@ -100,17 +101,22 @@ public class Client {
                 throw new RuntimeException(e);
             }
 
-            BufferedReader bufferedR = new BufferedReader(isr);
-            BufferedWriter bufferedW = new BufferedWriter(osw);
+            //creez client ca ce o fi
+        if(name.equals("HTC")){
+            new RoomTemperatureController_RTC(osw,Constants.SIM_PERIOD);
+        }
+
+            //BufferedReader bufferedR = new BufferedReader(isr);
+          //  BufferedWriter bufferedW = new BufferedWriter(osw);
 
 
-            try {
+           /* try {
                 bufferedW.write(name);
                 bufferedW.newLine();
                 bufferedW.flush();
             } catch (IOException e) {
                 throw new RuntimeException(e);
-            }
+            }*/
 
         Client client = new Client(socket, name);
         client.listenForMessage();

@@ -12,18 +12,39 @@ public class ACCClientHandler extends ClientHandler{
         while(socket.isConnected()){
             try{
                 messageFromClient = bufferedReader.readLine();
-                double value = parseMessageFromClient(messageFromClient);
+                String value = parseMessageFromClient(messageFromClient);
 
-                // cum fac aici ca am si setACOn si setIsCool
+                if(value.contains("O")){  //initial am facut cu value.startsWith "O" sau "C" dar nu e mai bine cu contains?
+                  if(value.contains("true")){
+                      plant.setACOn(true);
+                  }else if (value.contains("false")){
+                      plant.setACOn(false);
+                  }
+                    if(value.contains("C")){
+                        if(value.contains("true")){
+                            plant.setIsCool(true);
+                        }else if (value.contains("false")){
+                            plant.setIsCool(false);
+                        }}
+
+                }
+
             }catch (IOException e){}
         }
     }
-    private double parseMessageFromClient(String message){
-        double value=0;
-        try{
-            value = Double.parseDouble(message);
-        }catch (NumberFormatException e){}
+    //   O-onOff sau C-cool/heat inainte  true/false
+    private String parseMessageFromClient(String message){
 
-        return value;
+        if(message.equals("Cfalse")){
+            return message;
+        }else if(message.equals("Ctrue")){
+            return message;
+        }
+        if(message.equals("Otrue")){
+            return message;
+        }else if(message.equals("Ofalse")){
+            return message;
+        }
+        return "Wrong message";
     }
 }

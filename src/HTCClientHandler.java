@@ -8,18 +8,21 @@ public class HTCClientHandler extends ClientHandler{
 
     public void run() {
         String messageFromClient;
-
+        try {
+            messageFromClient = bufferedReader.readLine();
         while (socket.isConnected()) {
-            try {
-                messageFromClient = bufferedReader.readLine();
+
+
                 double value = parseMessageFromClient(messageFromClient);
                 plant.setHeaterGasCmd(value);
 
                 double waterTemp = plant.getTankWaterTemperature();
                 bufferedWriter.write(waterTemp + "");
-            } catch (IOException e) { }
 
-        }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();}
+
     }
 
     private double parseMessageFromClient(String message){

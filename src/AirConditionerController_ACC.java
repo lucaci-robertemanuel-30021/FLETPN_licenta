@@ -6,6 +6,8 @@ import core.FuzzyPetriLogic.PetriNet.Recorders.FullRecorder;
 import core.FuzzyPetriLogic.Tables.OneXOneTable;
 import core.TableParser;
 
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -52,7 +54,7 @@ public class AirConditionerController_ACC {
     private FuzzyDriver temperatureDriver;
     private FullRecorder rec;
     private AsyncronRunnableExecutor executor;
-    public AirConditionerController_ACC(PlantModel plantModel, long simPeriod) {
+    public AirConditionerController_ACC(OutputStreamWriter osw, long simPeriod) {
         net = new FuzzyPetriNet();
         TableParser parser=new TableParser();
 
@@ -119,26 +121,45 @@ public class AirConditionerController_ACC {
         net.addActionForOuputTransition(t6Out, new Consumer<FuzzyToken>() {
             @Override
             public void accept(FuzzyToken fuzzyToken) {
-                plantModel.setACOn(true);
-             //   plantModel.setAcAirTemp(22);
+                //plantModel.setACOn(true);
+                try {
+                    osw.write("Otrue");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         net.addActionForOuputTransition(t7Out, new Consumer<FuzzyToken>() {
             @Override
             public void accept(FuzzyToken fuzzyToken) {
-                plantModel.setACOn(false);
+                //plantModel.setACOn(false);
+                try {
+                    osw.write("Ofalse");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         net.addActionForOuputTransition(t8Out, new Consumer<FuzzyToken>() {
             @Override
             public void accept(FuzzyToken fuzzyToken) {
-                plantModel.setIsCool(false); //false is heat
+                //plantModel.setIsCool(false); //false is heat
+                try {
+                    osw.write("Cfalse");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         net.addActionForOuputTransition(t9Out, new Consumer<FuzzyToken>() {
             @Override
             public void accept(FuzzyToken fuzzyToken) {
-                plantModel.setIsCool(true); // true is cool
+                //plantModel.setIsCool(true); // true is cool
+                try {
+                    osw.write("Ctrue");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
