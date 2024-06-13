@@ -11,18 +11,12 @@ public class HTCClientHandler extends ClientHandler{
         try {
             messageFromClient = bufferedReader.readLine();
         while (socket.isConnected()) {
-
-
                 double value = parseMessageFromClient(messageFromClient);
                 plant.setHeaterGasCmd(value);
-
                 double waterTemp = plant.getTankWaterTemperature();
                 bufferedWriter.write(waterTemp + "");
-
-            }
-        } catch (IOException e) {
+            }} catch (IOException e) {
             e.printStackTrace();}
-
     }
 
     private double parseMessageFromClient(String message){
@@ -30,8 +24,6 @@ public class HTCClientHandler extends ClientHandler{
         try{
             value = Double.parseDouble(message);
         }catch (NumberFormatException e){}
-
-        return value;
-    }
+        return value;}
 }
 

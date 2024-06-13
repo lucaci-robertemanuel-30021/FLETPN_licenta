@@ -1,3 +1,5 @@
+import UI.MainFrame;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -20,6 +22,7 @@ public Server(ServerSocket serverSocket){
 public void startPlant(){
 
     try{
+        MainFrame mainFrame = new MainFrame("Plant");
         //here start plant & scenario
         Scenario scenario = Scenario.winterDay();
         System.out.println("winter day");
