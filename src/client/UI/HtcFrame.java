@@ -9,6 +9,7 @@ public class HtcFrame extends JFrame {
     private JPanel HtcPanel;
     private JButton turnOnOffButton;
     private JButton goBackButton;
+    private JTextArea performanțeTextArea;
     private boolean buttonIsPressed = false;
     public HtcFrame(){
         turnOnOffButton.setBackground(Color.RED);
@@ -30,7 +31,7 @@ public class HtcFrame extends JFrame {
                 if (!buttonIsPressed) {
                     turnOnOffButton.setBackground(Color.GREEN);
                     buttonIsPressed = true;
-                    //creeaz
+                    //sa il pornesc de aici regulatorul sau dau comanda altundeva?
                 } else {
                     turnOnOffButton.setBackground(Color.RED);
                     buttonIsPressed = false;

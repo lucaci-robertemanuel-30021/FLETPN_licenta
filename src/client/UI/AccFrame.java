@@ -10,6 +10,7 @@ public class AccFrame extends JFrame{
     private JPanel AccPanel;
     private JButton turnACCOnOffButton;
     private JButton goBackButton;
+    private JTextArea textArea1;
     private boolean buttonIsPressed = false;
 public AccFrame() {
     turnACCOnOffButton.setBackground(Color.RED);

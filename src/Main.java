@@ -1,24 +1,30 @@
 import java.io.OutputStreamWriter;
 import java.util.List;
+
+import client.Controllers.AirConditionerController_ACC;
+import client.Controllers.HeaterTankController_HTC;
+import client.Controllers.RoomTemperatureController_RTC;
 import Main.FuzzyPVizualzer;
 import Main.Plotter;
-import UI.MainFrame;
+import client.UI.ClientFrame;
 import View.MainView;
+import Server.models.PlantModel;
+import Server.models.Scenario;
 
 public class Main {
     private static final int SIM_PERIOD = 10;
 
     public static void main(String[] args) {
         //for gui
-        MainFrame mainFrame = new MainFrame("Plant");
+        ClientFrame clientFrame = new ClientFrame("Plant");
         ///////////
         OutputStreamWriter osw=null;
         Scenario scenario = Scenario.winterDay();
         System.out.println("winter day");
         PlantModel plantModel = new PlantModel(SIM_PERIOD, scenario);
-        HeaterTankController_HTC tankController = new HeaterTankController_HTC(osw, SIM_PERIOD); //changed plantModel to osw to all 3
-        RoomTemperatureController_RTC roomController = new RoomTemperatureController_RTC(osw, SIM_PERIOD);
-        AirConditionerController_ACC airConditionerController = new AirConditionerController_ACC(osw, SIM_PERIOD);
+        HeaterTankController_HTC tankController = new HeaterTankController_HTC(SIM_PERIOD); //changed plantModel to osw to all 3
+        RoomTemperatureController_RTC roomController = new RoomTemperatureController_RTC(SIM_PERIOD);
+        AirConditionerController_ACC airConditionerController = new AirConditionerController_ACC(SIM_PERIOD);
 
         roomController.start();
         tankController.start();

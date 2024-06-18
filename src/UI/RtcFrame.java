@@ -1,4 +1,4 @@
-package UI;
+package client.UI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -7,7 +7,7 @@ import java.awt.Color;
 
 public class RtcFrame extends JFrame {
     //de introdus aici
-    //private RoomTemperatureController_RTC rtc;
+    //private client.Controllers.RoomTemperatureController_RTC rtc;
     private JFrame rtCFrame = new JFrame();
     private JButton goBackButton;
     private JButton turnOnOffButton;
@@ -33,7 +33,7 @@ public class RtcFrame extends JFrame {
                 if (!buttonIsPressed) {
                     turnOnOffButton.setBackground(Color.GREEN);
                     buttonIsPressed = true;
-                    //new RoomTemperatureController_RTC(osw, Constants.SIM_PERIOD);
+                    //new client.Controllers.RoomTemperatureController_RTC(osw, client.Constants.SIM_PERIOD);
                 } else {
                     turnOnOffButton.setBackground(Color.RED);
                     buttonIsPressed = false;
