@@ -64,7 +64,6 @@ public class AccFrame extends JFrame{
         this();
         this.setTitle(title);
     }
-
     public JPanel getAccPanel(){
 
         return AccPanel;

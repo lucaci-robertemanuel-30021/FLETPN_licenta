@@ -1,6 +1,8 @@
 package client.UI;
 
 import Server.ServerConstants;
+import client.ClientConstants;
+import client.Controllers.HeaterTankController_HTC;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +19,7 @@ public class HtcFrame extends JFrame {
     private JTextArea performanteTextArea;
     private boolean buttonIsPressed = false;
     private BufferedWriter bufferedWriter = null;
+    private BufferedReader bufferedReader = null;
     public HtcFrame(){
         turnOnOffButton.setBackground(Color.RED);
         this.setSize(600,400);
@@ -45,7 +48,21 @@ public class HtcFrame extends JFrame {
                         bufferedWriter.write(controllerName);
                         bufferedWriter.flush();
                         performanteTextArea.append("HTC este pornit\n");
+                        //ar trb sa il pornesc din afara de undeva ca sa il pot opri dupa?
+                        HeaterTankController_HTC htc= new HeaterTankController_HTC(ClientConstants.SIM_PERIOD);
+                        htc.start();
+                        double waterRefTemp = 75.0;
+                        bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                        System.out.println(bufferedReader);
 
+                       /* for (int i = 0; i < scenario.getScenarioLength(); i++) {
+                            htc.setWaterRefTemp(waterRefTemp);
+                            htc.setTankWaterTemp(plantModel.getTankWaterTemperature());
+
+                            try {Thread.sleep(10);
+                            } catch (InterruptedException eee) { eee.printStackTrace();	}
+                        }
+*/
                     } catch (IOException ee) {
                         performanteTextArea.append("Eroare: "+ee.getMessage()+"\n");
                         ee.printStackTrace();
@@ -55,11 +72,11 @@ public class HtcFrame extends JFrame {
                     turnOnOffButton.setBackground(Color.RED);
                     buttonIsPressed = false;
                     performanteTextArea.append("HTC este oprit\n");
+                    //htc.stop();
                 }
             }
         });
     }
-
     public HtcFrame(String title){
         this();
         this.setTitle(title);

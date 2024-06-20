@@ -25,6 +25,16 @@ public Server(ServerSocket serverSocket){
     this.serverSocket = serverSocket;
 }
 
+public void sendScenarioToClient(Scenario scenario){
+
+    try (Socket socket = new Socket(ServerConstants.Server_Address,ServerConstants.PORT);
+         PrintWriter writer = new PrintWriter(socket.getOutputStream())) {
+         writer.println(scenario);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+}
     public void startScenario(String scenarioValue){
 
         if(scenarioValue.equals("Zi de iarna")){
@@ -42,6 +52,8 @@ public Server(ServerSocket serverSocket){
         }else if(scenarioValue.equals("Dimineata de iarna")){
             scenario=Scenario.winterMorning();
         }
+
+        sendScenarioToClient(scenario);
     }
 
     public PlantModel getPlantModel() {

@@ -56,6 +56,7 @@ public class ServerFrame extends JFrame{
 
                 logField.append("Scenariul selectat este: "+selectedScenario+"\n");
                 sendScenarioToServer(selectedScenario);
+
             }
         });
     }
