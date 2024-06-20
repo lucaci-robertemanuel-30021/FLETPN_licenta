@@ -16,7 +16,7 @@ public class Main {
 
     public static void main(String[] args) {
         //for gui
-        ClientFrame clientFrame = new ClientFrame("Plant");
+       // ClientFrame clientFrame = new ClientFrame("Plant");
         ///////////
         OutputStreamWriter osw=null;
         Scenario scenario = Scenario.winterDay();

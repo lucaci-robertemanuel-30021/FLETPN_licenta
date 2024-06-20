@@ -1,5 +1,6 @@
 package client.UI;
 
+import client.Client;
 import client.UI.AccFrame;
 import client.UI.HtcFrame;
 import client.UI.RtcFrame;
@@ -17,7 +18,7 @@ public class ClientFrame extends JFrame{
     private JButton ACC_btn;
     private String title = "";
 
-    public ClientFrame(){
+    public ClientFrame(Client client){
 
         this.setSize(600,400);
         this.setLocationRelativeTo(null);
@@ -58,8 +59,8 @@ public class ClientFrame extends JFrame{
         });
 
     }
-   public ClientFrame(String title){
-        this();
+   public ClientFrame(Client client, String title){
+        this(client);
         this.setTitle(title);
     }
 public JPanel getMainPanel(){

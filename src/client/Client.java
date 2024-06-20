@@ -11,29 +11,16 @@ public class Client {
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
 
-    private String name;
+    public Client(Socket socket) {
 
-    public Client(Socket socket, String name) {
-        try {
             this.socket = socket;
-            this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            this.name = name;
-        } catch (IOException e) {
-            closeEverything(socket, bufferedReader, bufferedWriter);
-        }
     }
 
     public void sendMessage() {
         try {
-            bufferedWriter.write(name);
             bufferedWriter.newLine();
             bufferedWriter.flush();
-
-            Scanner scanner = new Scanner(System.in);
             while (socket.isConnected()) {
-                String messageToSend = scanner.nextLine();
-                bufferedWriter.write(name + ": " + messageToSend);
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
             }
@@ -54,7 +41,6 @@ public class Client {
                         System.out.println(msg);
                     } catch (IOException e) {
                         closeEverything(socket, bufferedReader, bufferedWriter);
-
                     }
                 }
             }
@@ -80,11 +66,6 @@ public class Client {
 
     public static void main(String[] args) {
 
-
-        ClientFrame clientFrame = new ClientFrame("Client");
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Add the name of the controller you want to use(ACC, HTC, RTC): ");
-        String name = scanner.nextLine();
         Socket socket = null;
 
             try {
@@ -93,19 +74,9 @@ public class Client {
                 throw new RuntimeException(e);
             }
 
-
-            InputStreamReader isr;
-            OutputStreamWriter osw;
-            try {
-                isr = new InputStreamReader(socket.getInputStream());
-                osw = new OutputStreamWriter(socket.getOutputStream());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-
-        Client client = new Client(socket, name);
-        client.listenForMessage();
-        client.sendMessage();
+        Client client = new Client(socket);
+        ClientFrame clientFrame = new ClientFrame(client,"Client");
+       // client.listenForMessage();
+    //   client.sendMessage();
     }
     }

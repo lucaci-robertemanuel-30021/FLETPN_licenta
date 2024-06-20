@@ -27,12 +27,10 @@ public class ClientHandlerFactory {
             setControllerName(controllerName);
             return  new ACCClientHandler(socket,plant);
         }
-        //daca adaug aici chiar daca numele e bun tot se afiseaza wrong controller
         else
         {
             System.out.println("Wrong controller name");
         }
-
         return null;
     }
 

@@ -119,8 +119,8 @@ public class Client {
             }*/
 
         Client client = new Client(socket, name);
-        client.listenForMessage();
-        client.sendMessage();
+    //    client.listenForMessage();
+    //    client.sendMessage();
        // client.closeEverything(socket, bufferedR, bufferedW);
     }
     }
