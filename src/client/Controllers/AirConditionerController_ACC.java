@@ -195,8 +195,8 @@ public class AirConditionerController_ACC {
         Map<Integer, FuzzyToken> inps = new HashMap<Integer, FuzzyToken>();
         inps.put(p1RefInp, temperatureDriver.fuzzifie(roomTemperatureRef));
         inps.put(p3RealInp, temperatureDriver.fuzzifie(roomTemperature));
-
        // inps.put(p12Inp, temperatureDriver.fuzzifie(0.005));
+
         executor.putTokenInInputPlace(inps);
     }
     public FuzzyPetriNet getNet() {    return net;  }

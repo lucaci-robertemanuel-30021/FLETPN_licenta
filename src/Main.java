@@ -71,8 +71,7 @@ public class Main {
         System.out.println("avg room temp :" + roomTempStats[2]);
         System.out.println("heater on ratio:" + plantModel.heatingOnRatio());
         System.out.println("max nr of minutes continuous heating on:" + plantModel.maxContinuousHeaterOn());
-        //added to update the gas consumption
-        //plant.makeLogs();
+
         System.out.println("all consumption ::" + plantModel.gasConsumption());
         System.out.println("avg consumption in  a min ::" + plantModel.gasConsumption() / scenario.getScenarioLength());
 

@@ -38,7 +38,7 @@ public class RoomTemperatureController_RTC {
     private FullRecorder rec;
     private AsyncronRunnableExecutor executor;
     private int p3RealInp;
-    //prin constructor primeste perioada referinta pentru plant
+
   private BufferedReader br;
   private PrintWriter pw;
   private boolean isRunning;

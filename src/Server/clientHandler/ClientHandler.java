@@ -19,7 +19,7 @@ public abstract class ClientHandler implements Runnable {
            this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
        }catch (IOException e){
-          // closeEverything(socket,bufferedReader,bufferedWriter);
+
        }
 
     }

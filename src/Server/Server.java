@@ -25,16 +25,6 @@ public Server(ServerSocket serverSocket){
     this.serverSocket = serverSocket;
 }
 
-public void sendScenarioToClient(Scenario scenario){
-
-    try (Socket socket = new Socket(ServerConstants.Server_Address,ServerConstants.PORT);
-         PrintWriter writer = new PrintWriter(socket.getOutputStream())) {
-         writer.println(scenario);
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-
-}
     public void startScenario(String scenarioValue){
 
         if(scenarioValue.equals("Zi de iarna")){
@@ -52,8 +42,6 @@ public void sendScenarioToClient(Scenario scenario){
         }else if(scenarioValue.equals("Dimineata de iarna")){
             scenario=Scenario.winterMorning();
         }
-
-        sendScenarioToClient(scenario);
     }
 
     public PlantModel getPlantModel() {
@@ -64,28 +52,40 @@ public void sendScenarioToClient(Scenario scenario){
         this.plantModel = plantModel;
     }
 
-    public void startPlant(){
-    try {
-        Socket socket = serverSocket.accept();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        String scenarioName = reader.readLine();
-        System.out.println(reader.readLine());
-        System.out.println("Server: " + scenarioName);
-        startScenario(scenarioName);
+    public void startPlant(String selectedScenario){
+
+        startScenario(selectedScenario);
 
         PlantModel plantModel = new PlantModel(ServerConstants.SIM_PERIOD, scenario);
         setPlantModel(plantModel);
 
         System.out.println("Model centrală pornită");
-    } catch (IOException e) {
-        throw new RuntimeException(e);}}
+}
+
     public void startServerSocket(){
         ClientHandlerFactory factory = new ClientHandlerFactory(getPlantModel());
+        String controllerName=null;
         try{
-        while(!serverSocket.isClosed()) {   ///while-ul asta blocheaza executia
+        while(!serverSocket.isClosed()) {
+
             Socket socket = serverSocket.accept();
+            System.out.println("Port is: "+serverSocket.getLocalPort());
+            System.out.println("Address is: "+serverSocket.getLocalSocketAddress());
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            String controllerName = bufferedReader.readLine();
+            System.out.println("before");
+            bufferedReader.readLine();
+            System.out.println("after");
+            //problema e ca controller name ramane mereu null
+
+            while(controllerName==null){
+                System.out.println("of");
+                controllerName = bufferedReader.readLine(); //
+                if(controllerName==null){
+                    System.out.println("nul");
+                }
+                System.out.println(controllerName);}
+
+            System.out.println("controller name: "+controllerName);
             ClientHandler c = factory.getClientHandler(socket, controllerName);
             Thread thread = new Thread(c);
             thread.start();
@@ -117,12 +117,13 @@ public void closeServerSocket(){
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(ServerConstants.PORT);
+            System.out.println("Server is started on port: "+ServerConstants.PORT);
+            Server server = new Server(serverSocket);
+            ServerFrame serverFrame = new ServerFrame(server,"Plant");
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        Server server = new Server(serverSocket);
-        ServerFrame serverFrame = new ServerFrame(server,"Plant");
         System.out.println("main finish");
     }
 

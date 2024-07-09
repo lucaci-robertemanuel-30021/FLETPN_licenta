@@ -18,7 +18,7 @@ public class ACCClientHandler extends ClientHandler {
                 messageFromClient = bufferedReader.readLine();
                 String value = parseMessageFromClient(messageFromClient);
 
-                if(value.contains("O")){  //initial am facut cu value.startsWith "O" sau "C" dar nu e mai bine cu contains?
+                if(value.contains("O")){
                   if(value.contains("true")){
                       plant.setACOn(true);
                   }else if (value.contains("false")){

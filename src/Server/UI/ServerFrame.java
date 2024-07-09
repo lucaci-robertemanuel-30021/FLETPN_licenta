@@ -1,13 +1,9 @@
 package Server.UI;
 
 import Server.Server;
-import Server.ServerConstants;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.Socket;
 
 public class ServerFrame extends JFrame{
     private JComboBox scenarioSelecter;
@@ -16,6 +12,7 @@ public class ServerFrame extends JFrame{
     private JTextArea logField;
     private JPanel mainPanel;
     private JButton iesireButton;
+    String selectedScenario;
 
     public ServerFrame(Server server) {
         this.setSize(600,400);
@@ -27,11 +24,10 @@ public class ServerFrame extends JFrame{
     startPlantButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            //start the plant with selected scenario
-                //aici se blocheaza ServerFrame, nu e de la startPlant() cred
-            server.startPlant();
+
+            server.startPlant(selectedScenario);
+
             logField.append("Model centrala pornit\n");
-            //start serversocket
             (new Thread() {
                 public void run() {
                     server.startServerSocket();
@@ -52,21 +48,12 @@ public class ServerFrame extends JFrame{
         scenarioSelecter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String selectedScenario = (String) scenarioSelecter.getSelectedItem();
+                selectedScenario = (String) scenarioSelecter.getSelectedItem();
 
                 logField.append("Scenariul selectat este: "+selectedScenario+"\n");
-                sendScenarioToServer(selectedScenario);
-
+                scenarioSelecter.setEnabled(false);
             }
         });
-    }
-    private void sendScenarioToServer(String selectedScenario) {
-        try (Socket socket = new Socket(ServerConstants.Server_Address,ServerConstants.PORT);
-             PrintWriter writer = new PrintWriter(socket.getOutputStream())) {
-            writer.println(selectedScenario);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
     public ServerFrame(Server server,String title){
         this(server);

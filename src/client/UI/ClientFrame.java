@@ -1,13 +1,9 @@
 package client.UI;
 
-import client.Client;
-import client.UI.AccFrame;
-import client.UI.HtcFrame;
-import client.UI.RtcFrame;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.Socket;
 
 public class ClientFrame extends JFrame{
     private JPanel mainPanel;
@@ -17,8 +13,9 @@ public class ClientFrame extends JFrame{
     private JButton RTC_btn;
     private JButton ACC_btn;
     private String title = "";
+    private Socket socket;
 
-    public ClientFrame(Client client){
+    public ClientFrame(){
 
         this.setSize(600,400);
         this.setLocationRelativeTo(null);
@@ -59,12 +56,15 @@ public class ClientFrame extends JFrame{
         });
 
     }
-   public ClientFrame(Client client, String title){
-        this(client);
+   public ClientFrame(String title){
         this.setTitle(title);
     }
 public JPanel getMainPanel(){
 
         return mainPanel;
 }
+
+    public static void main(String[] args) {
+        ClientFrame clientFrame = new ClientFrame();
+    }
 }

@@ -9,11 +9,12 @@ public class Client {
 
     public Client(Socket socket) {
 
-            this.socket = socket;
+            //this.socket = socket;
     }
-
+/*
     public static void main(String[] args) {
 
+       //la fiecare frame instead, client nu mai trb
         Socket socket = null;
 
             try {
@@ -26,4 +27,6 @@ public class Client {
         ClientFrame clientFrame = new ClientFrame(client,"Client");
 
 
-    }}
+    }*/
+    }
+
