@@ -44,6 +44,7 @@ public class RoomTemperatureController_RTC {
   private boolean isRunning;
  public RoomTemperatureController_RTC(long simPeriod){
      createConnection();
+     announceIdentity();
      createPetriNet_RTC(simPeriod);
  }
 
@@ -58,6 +59,10 @@ public class RoomTemperatureController_RTC {
          throw new RuntimeException(e);
      }
  }
+    public void announceIdentity(){
+        String controllerName = "RTC";
+        pw.println(controllerName);
+    }
     public void createPetriNet_RTC(long simPeriod) {
         net = new FuzzyPetriNet();
         TableParser parser = new TableParser();

@@ -1,9 +1,5 @@
 package client.UI;
 
-import Main.FuzzyPVizualzer;
-import Main.Plotter;
-import Server.ServerConstants;
-import View.MainView;
 import client.ClientConstants;
 import client.Controllers.AirConditionerController_ACC;
 
@@ -11,11 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.Socket;
 import java.util.List;
 
 public class AccFrame extends JFrame{
@@ -25,7 +16,6 @@ public class AccFrame extends JFrame{
     private JButton goBackButton;
     private JTextArea performanteTextArea;
     private boolean buttonIsPressed = false;
-    private PrintWriter printWriter = null;
 
     public AccFrame() {
     turnACCOnOffButton.setBackground(Color.RED);
@@ -46,33 +36,9 @@ public class AccFrame extends JFrame{
             if (!buttonIsPressed) {
             turnACCOnOffButton.setBackground(Color.GREEN);
             buttonIsPressed = true;
-            try {
-                Socket socket = new Socket(ClientConstants.Server_Address, ClientConstants.PORT);
-                printWriter = new PrintWriter(socket.getOutputStream(),true);
-                String controllerName = "ACC";
-                printWriter.println(controllerName);
-                acc.start();
-               /*
+            performanteTextArea.append("ACC este oprit\n");
+            acc.start();
 
-                MainView windowAirConditioner = FuzzyPVizualzer.visualize(acc.getNet(), acc.getRecorder());
-                Plotter plotterTemperatureLog = new Plotter(plantModel.getTemperatureLogs());
-                Plotter plotterCommandLog = new Plotter(plantModel.getCommandLogs());
-                windowAirConditioner.addInteractivePanel("TempLogs", plotterTemperatureLog.makeInteractivePlot());
-                windowAirConditioner.addInteractivePanel("ComandLogs", plotterCommandLog.makeInteractivePlot());
-
-                double[] ACTempStats = AccFrame.calcStatistics(plantModel.getTemperatureLogs().get("acAirTemp"));
-                performanteTextArea.append("Temperatura maxima aer: " + ACTempStats[0]+"\n");
-                performanteTextArea.append("Temperatura minima aer: " + ACTempStats[1]+"\n");
-                performanteTextArea.append("Temperatura medie aer: " + ACTempStats[2]+"\n");
-                performanteTextArea.append("Raport aer conditionat pornit: " + plantModel.ACOnRatio()+"\n");
-                stAer= (ACTempStats[0]-ACTempStats[1])*100/ACTempStats[2];
-                performanteTextArea.append("Variatia temp aerului față de valoarea medie: "+stAer+"%\n");
-
-                */
-            } catch (IOException ee) {
-                performanteTextArea.append("Eroare: " + ee.getMessage() + "\n");
-                ee.printStackTrace();
-            }
 
         } else {
             turnACCOnOffButton.setBackground(Color.RED);

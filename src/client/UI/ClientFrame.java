@@ -59,6 +59,7 @@ public class ClientFrame extends JFrame{
    public ClientFrame(String title){
         this.setTitle(title);
     }
+
 public JPanel getMainPanel(){
 
         return mainPanel;

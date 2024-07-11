@@ -32,20 +32,7 @@ public class AirConditionerController_ACC {
 
     static String t4Table = "{[<FF,ZR>, <FF,FF>, <FF,FF>, <FF,FF>, <ZR, FF>]}";
 
-    //tabelele noi
-    /*static String cool_heat = "{[<FF><PL><PL><PL><PL>]" +
-                              " [<NL><FF><PL><PL><PL>]" +
-                              " [<NL><NL><FF><PL><PL>]" +
-                              " [<NL><NL><NL><FF><PL>]" +
-                              " [<NL><NL><NL><NL><FF>]}"; //should be t5
-         */
     static String reader1X2 = "{[<NL,NL><NM,NM><ZR,ZR><PM,PM><PL,PL>]}"; //t3
-    static String t5_rule = ""//
-            + "{[<FF,FF><FF,FF><FF,FF><PL,FF><PL,FF>]" //
-            + " [<FF,FF><FF,FF><FF,FF><PL,FF><PL,FF>]" //
-            + " [<FF,FF><FF,FF><FF,FF><FF,FF><FF,FF>]"//
-            + " [<FF,FF><FF,FF><FF,FF><FF,NL><FF,NL>]"//
-            + " [<FF,FF><FF,FF><FF,FF><FF,NL><FF,NL>]}";
 
     static String simple_t5_rule = "{[<PL,FF><PL,FF><FF,FF><FF,NL><FF,NL> ]}";
     //////////
@@ -53,7 +40,6 @@ public class AirConditionerController_ACC {
     private FuzzyPetriNet net;
     private int p1RefInp;
     private int p3RealInp;
-    private int p12Inp;
     private FuzzyDriver temperatureDriver;
     private FullRecorder rec;
     private AsyncronRunnableExecutor executor;
@@ -63,6 +49,7 @@ public class AirConditionerController_ACC {
 
     public AirConditionerController_ACC(long simPeriod){
         createConnection();
+        announceIdentity();
         createPetriNet_ACC(simPeriod);
     }
     public void createConnection(){
@@ -75,6 +62,10 @@ public class AirConditionerController_ACC {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    public void announceIdentity(){
+        String controllerName = "ACC";
+        pw.println(controllerName);
     }
     public void createPetriNet_ACC(long simPeriod) {
         net = new FuzzyPetriNet();
@@ -122,8 +113,6 @@ public class AirConditionerController_ACC {
         net.addArcFromPlaceToTransition(p8, t7Out, 1.0);
 
         int t5 = net.addTransition(0, parser.parseOneXTwoTable(simple_t5_rule));
-      //  p12Inp = net.addInputPlace();
-       // net.addArcFromPlaceToTransition(p12Inp, t5, 1.0);
         net.addArcFromPlaceToTransition(p7, t5, 1.0);
         int p9 = net.addPlace();
         int p10 = net.addPlace();
@@ -195,7 +184,6 @@ public class AirConditionerController_ACC {
         Map<Integer, FuzzyToken> inps = new HashMap<Integer, FuzzyToken>();
         inps.put(p1RefInp, temperatureDriver.fuzzifie(roomTemperatureRef));
         inps.put(p3RealInp, temperatureDriver.fuzzifie(roomTemperature));
-       // inps.put(p12Inp, temperatureDriver.fuzzifie(0.005));
 
         executor.putTokenInInputPlace(inps);
     }

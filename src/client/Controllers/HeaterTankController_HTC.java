@@ -51,6 +51,7 @@ public class HeaterTankController_HTC {
 
     public HeaterTankController_HTC(long simPeriod){
         createConnection();
+        announceIdentity();
         createPetriNet_HTC(simPeriod);
     }
     public void createConnection(){
@@ -63,6 +64,11 @@ public class HeaterTankController_HTC {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void announceIdentity(){
+        String controllerName = "HTC";
+        pw.println(controllerName);
     }
     public void createPetriNet_HTC(long simPeriod) {
         // se construieste reteaua Petri pentru HTC component
@@ -134,17 +140,18 @@ public class HeaterTankController_HTC {
                Double tankWaterTemperature = null;
                try{
                    tankWaterTemperature = Double.parseDouble(br.readLine());
-                   //modifc 75 cu cat vr eu sa setez referinta eventual
                    setWaterRefTemp(75);
                    setTankWaterTemp(tankWaterTemperature);
                }catch (IOException e){
                    throw new RuntimeException(e);
                }
             }
+
         }
     }).start();}
 
     public void stop() { isRunning = false;
+       // pw.println("stop HTC");
         executor.stop();  }
     // citire temperatura din boiler
     public void setTankWaterTemp(double tankWaterTemperature) {
